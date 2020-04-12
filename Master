@@ -1,0 +1,123 @@
+import turtle
+
+class Shape:
+    def __init__(self):
+        pass
+    def draw(self):
+        print("Not implemented yet")
+
+class MovingAndStaticShapes(Shape):
+    def __init__(self, speed, sides, color, width, to_x, to_y, distance,
+    setheading, counter_clockwise):
+        self.turtle = turtle.Turtle()
+        self.turtle.speed(speed)
+        self.sides = sides
+        self.turtle.color(color)
+        self.turtle.pensize(width)
+        self.turtle.penup()
+        self.turtle.setx(to_x)
+        self.turtle.sety(to_y)
+        self.turtle.pendown()
+        self.distance = distance
+        self.turtle.setheading(setheading)
+        self.angle = 360/self.sides
+        if counter_clockwise:
+            self.movefunc = self.turtle.left
+        else:
+            self.movefunc = self.turtle.right
+
+    def draw(self):
+        self.turtle.hideturtle()
+        self.turtle.begin_fill()
+        for side in range(self.sides):
+            self.turtle.forward(self.distance)
+            self.movefunc(self.angle)
+        self.turtle.end_fill()
+
+scn = turtle.Screen()
+listOfMovingShapes = []
+listOfStaticShapes = []
+#aimated shapes bellow
+body = MovingAndStaticShapes(0, 25, "Yellow", 1, -150, -100, 10, 90, True)
+listOfMovingShapes.append(body)
+beak = MovingAndStaticShapes(0, 3, "brown", 1, -150, -100, 20, 90, False)
+listOfMovingShapes.append(beak)
+eye = MovingAndStaticShapes(0, 25, "black", 1, -170, -85, 1, 90, True)
+listOfMovingShapes.append(eye)
+foot1 = MovingAndStaticShapes(0, 3, "orange", 1, -195, -140, 15, 90, True)
+listOfMovingShapes.append(foot1)
+foot2 = MovingAndStaticShapes(0, 3, "orange", 1, -170, -140, 15, 130, True)
+listOfMovingShapes.append(foot2)
+#static shapes bellow
+    #House
+house = MovingAndStaticShapes(0, 4, "darkgreen", 1, 190, 10, 90, 90, True)
+listOfStaticShapes.append(house)
+roof = MovingAndStaticShapes(0, 3, "maroon", 1, 190, 100, 90, 180, False)
+listOfStaticShapes.append(roof)
+door = MovingAndStaticShapes(0, 4, "cyan", 1, 163, 10, 35, 90, True)
+listOfStaticShapes.append(door)
+window1 = MovingAndStaticShapes(0, 4, "black", 1, 120, 70, 15, 90, True)
+listOfStaticShapes.append(window1)
+window2 = MovingAndStaticShapes(0, 4, "black", 1, 182, 70, 15, 90, True)
+listOfStaticShapes.append(window2)
+    #Trees(There are 3)
+treeTrunk1 = MovingAndStaticShapes(0, 1, "chocolate", 20, -34, 10, 90, 90, False)
+listOfStaticShapes.append(treeTrunk1)
+treeTop1 = MovingAndStaticShapes(0, 8, "darkgreen", 1, 0, 100, 30, 90, True)
+listOfStaticShapes.append(treeTop1)
+treeTrunk2 = MovingAndStaticShapes(0, 1, "chocolate", 20, -150, 10, 90, 90, False)
+listOfStaticShapes.append(treeTrunk2)
+treeTop2 = MovingAndStaticShapes(0, 8, "darkgreen", 1, -111, 100, 30, 90, True)
+listOfStaticShapes.append(treeTop2)
+treeTrunk3 = MovingAndStaticShapes(0, 1, "chocolate", 20, -200, 10, 90, 90, False)
+listOfStaticShapes.append(treeTrunk3)
+treeTop3 = MovingAndStaticShapes(0, 8, "darkgreen", 1, -171, 100, 30, 90, True)
+listOfStaticShapes.append(treeTop3)
+
+for i in range(42):
+    color = "purple"
+    if i % 4 == 3:
+        color = "magenta"
+    else:
+        color = "purple"
+
+    ypos = 10
+    if (i//4)%4 == 0:
+        ypos = 10
+    elif (i//4)%4 == 1:
+        ypos = 10 - (5*(i%4))
+    elif (i//4)%4 ==2:
+        ypos = -10
+    else:
+        ypos = -10 +(5*(i%4))
+
+    flower = MovingAndStaticShapes(0, 6, color, 1, 100-(i*10), ypos, 4, 90, True )
+    listOfStaticShapes.append(flower)
+
+for shape in listOfStaticShapes:
+    shape.draw()
+color = 0
+
+def animate():
+    for shape in listOfMovingShapes:
+        shape.draw()
+    for shape in listOfMovingShapes:
+        shape.turtle.clear()
+    updateAllTheShapes()
+
+def updateAllTheShapes():
+    for shape in listOfMovingShapes:
+        shape.turtle.penup()
+        shape.turtle.setx(shape.turtle.xcor() + 100)
+        shape.turtle.sety(shape.turtle.ycor() + 42)
+        shape.turtle.pendown()
+
+for i in range(4):
+    animate()
+
+lightOnInWindow = MovingAndStaticShapes(0, 4, "yellow", 1, 182, 70, 15, 90, True)
+listOfStaticShapes.append(lightOnInWindow)
+lightOnInWindow.draw()
+
+turtle.exitonclick()
+turtle.done()
